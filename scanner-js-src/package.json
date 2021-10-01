@@ -1,0 +1,56 @@
+{
+  "name": "scanner",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^12.20.27",
+    "@types/react": "^17.0.24",
+    "@types/react-dom": "^17.0.9",
+    "@zxing/browser": "^0.0.9",
+    "@zxing/library": "^0.18.6",
+    "primeicons": "^4.1.0",
+    "primereact": "^6.6.0-rc.1",
+    "quagga": "^0.12.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "react-transition-group": "^4.4.2",
+    "typescript": "^4.4.3"
+  },
+  "scripts": {
+    "start": "HOST=0.0.0.0 HTTPS=true react-scripts start",
+    "build": "webpack",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "cache-loader": "^4.1.0",
+    "css-loader": "^3.6.0",
+    "source-map-loader": "^1.1.3",
+    "ts-loader": "^7.0.5",
+    "webpack": "4.44.2",
+    "webpack-cli": "^4.8.0"
+  }
+}

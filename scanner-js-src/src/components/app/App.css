@@ -1,0 +1,45 @@
+.wp-input-scanner-root,
+.p-dialog-mask.p-component-overlay
+{
+    z-index: 99999 !important;
+}
+
+.p-toast
+{
+    z-index: 999999 !important;
+}
+
+.p-dialog-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scanner-dialog-footer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+.scanner-dialog-footer > *
+{
+    min-width: 30% !important;
+}
+
+.scanner-dialog-footer > .p-dropdown
+{
+    width: 100% !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .p-toast {
+        width: 20rem !important;
+    }
+
+    .p-dialog-header-maximize{
+        display: none !important;
+    }
+}
+
+

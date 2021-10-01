@@ -1,0 +1,20 @@
+.ios-file-dialog-button{
+    left: 0;
+    top: 0;
+    opacity: 0;
+    z-index: 1;
+}
+
+.ios-file-dialog-wrapper{
+    /*width: 100% !important;*/
+    margin: 0 0.5rem 0 0 !important;
+    position: relative;
+}
+
+.ios-file-dialog-wrapper > * {
+
+    position: absolute;
+    width: 100% !important;
+    height: 100% !important;
+    left: 0;
+}
