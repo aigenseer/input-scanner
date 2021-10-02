@@ -5,9 +5,6 @@ With the user-friendly administrator interface, further settings such as the tex
 ### Demo & Documentation
 [Demo](https://aigenseer.github.io/wp-input-scanner/)
 
-### Using the QR Scanner Redirect
-Place the shortcode `[qr-scanner-redirect]` in your templates.
-
 ### Using
 Add the class .wp-scanner to use the scanner with a click on the input element.
 or
