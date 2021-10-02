@@ -52,7 +52,7 @@ class WPScanner
         }
     }
 
-    private static start(elm: HTMLInputElement){
+    public static start(elm: HTMLInputElement){
         if(WPScanner.appRef){
             WPScanner.appRef.start((code: string) => {
                 console.log(code)
