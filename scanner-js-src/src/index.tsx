@@ -7,22 +7,22 @@ import Properties from "./lib/Properties";
 
 declare global {
     interface Window {
-        WPScanner:any;
+        InputScanner:any;
     }
 }
 
-class WPScanner
+class InputScanner
 {
     static appRef: IAppHandle|null = null;
 
     public static initInstance(props: any = {}){
-        WPScanner.addEventListenerByQuerySelector([".wp-scanner"]);
-        WPScanner.addInputLabelByQuerySelector([".wp-scanner-open-label"]);
-        if(WPScanner.appRef === null){
+        InputScanner.addEventListenerByQuerySelector([".input-scanner-open"]);
+        InputScanner.addInputLabelByQuerySelector([".input-scanner-open-label"]);
+        if(InputScanner.appRef === null){
             Properties.init(props);
             let div = document.createElement("div");
             document.getElementsByTagName("body")[0].append(div)
-            WPScanner.render(div);
+            InputScanner.render(div);
         }
     }
 
@@ -30,7 +30,7 @@ class WPScanner
     {
         for (const c of classes) {
             [...document.querySelectorAll(c) as any].forEach((elm) => {
-                elm.addEventListener("click", () => WPScanner.start(elm));
+                elm.addEventListener("click", () => InputScanner.start(elm));
             });
         }
     }
@@ -44,7 +44,7 @@ class WPScanner
                 let parentElement = elm.parentElement;
                 let span = document.createElement("span");
                 span.className = "p-button p-component p-inputgroup-addon p-button-icon p-c pi pi-camera"
-                span.addEventListener("click", () => WPScanner.start(elm));
+                span.addEventListener("click", () => InputScanner.start(elm));
                 wrapper.append(elm);
                 wrapper.append(span);
                 parentElement?.append(wrapper);
@@ -53,8 +53,8 @@ class WPScanner
     }
 
     public static start(elm: HTMLInputElement){
-        if(WPScanner.appRef){
-            WPScanner.appRef.start((code: string) => {
+        if(InputScanner.appRef){
+            InputScanner.appRef.start((code: string) => {
                 console.log(code)
                 elm.value = code;
             });
@@ -64,11 +64,11 @@ class WPScanner
     private static render(rootElement: HTMLElement){
         ReactDOM.render(
             <React.StrictMode>
-                <App ref={e => WPScanner.appRef = e} />
+                <App ref={e => InputScanner.appRef = e} />
             </React.StrictMode>, rootElement
         );
     }
 }
 
-window.WPScanner = WPScanner
+window.InputScanner = InputScanner
 

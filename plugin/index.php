@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name:       WP Input Scanner
- * Plugin URI:        https://github.com/aigenseer/wp-input-scanner
- * Description:       Wordpress input scanner for QR and barcodes
+ * Plugin Name:       Input Scanner
+ * Plugin URI:        https://github.com/aigenseer/input-scanner
+ * Description:       Input scanner for QR and barcodes
  * Version:           1.0.0
  * Requires at least: 5.2
  * Requires PHP:      7.2
@@ -13,12 +13,12 @@
  */
 
 
-define('WPIS_PREFIX', 'wpinputscanner');
-define('WPIS_NAME', 'WP-Input-Scanner');
-define('WPIS_PLUGIN_FILE_URL', dirname( __FILE__ , 1 ));
+define('IS_PREFIX', 'inputscanner');
+define('IS_NAME', 'Input-Scanner');
+define('IS_PLUGIN_FILE_URL', dirname( __FILE__ , 1 ));
 
 include "class/tabs.class.php";
-$wpis_tabs = new WPIS_Tabs(WPIS_PREFIX, WPIS_NAME, [
+$is_tabs = new IS_Tabs(IS_PREFIX, IS_NAME, [
     'settings' => (object)[
         'title' => 'Settings'
     ],
@@ -26,23 +26,23 @@ $wpis_tabs = new WPIS_Tabs(WPIS_PREFIX, WPIS_NAME, [
         'title' => 'Language'
     ]
 ]);
-$wpis_tabs->addScripts();
+$is_tabs->addScripts();
 
 include "sql/pluginsettings.class.php";
-$wpis_pluginsettings = new WPIS_PluginSettings(WPIS_PREFIX, (object)[
+$is_pluginsettings = new IS_PluginSettings(IS_PREFIX, (object)[
     'settings' => (object)[
         'customTags' => (object)[
             'title' => 'Custom HTML queryselectors',
             'style' => 'width: 80%; min-height: 500px;',
             'type' => 'long-string',
-            'defaultvalue' => '.wp-input-custom-open',
+            'defaultvalue' => '.input-custom-open',
             'description' => 'Add own queryselector (ids, classes) to open the scanner. With one click the element opens and the scanner opens.'
         ],
         'customInputTags' => (object)[
             'title' => 'Custom HTML queryselectors to add the input labels',
             'style' => 'width: 80%; min-height: 500px;',
             'type' => 'long-string',
-            'defaultvalue' => '.wp-input-custom-label-open',
+            'defaultvalue' => '.input-custom-label-open',
             'description' => 'Add own queryselector (ids, classes) to add the input label and open the scanner.'
         ],
     ],
@@ -84,49 +84,49 @@ $wpis_pluginsettings = new WPIS_PluginSettings(WPIS_PREFIX, (object)[
         ]
     ]
 ]);
-$wpis_pluginsettings->createTable();
+$is_pluginsettings->createTable();
 
 
 add_action("admin_menu", function(){
-    add_menu_page(WPIS_NAME, WPIS_NAME, "manage_options", WPIS_PREFIX, function(){
-        global $wpis_tabs;
-        $wpis_tabs->display(WPIS_PLUGIN_FILE_URL . "/include/settings.php");
+    add_menu_page(IS_NAME, IS_NAME, "manage_options", IS_PREFIX, function(){
+        global $is_tabs;
+        $is_tabs->display(IS_PLUGIN_FILE_URL . "/include/settings.php");
     });
 });
 
 add_action('admin_enqueue_scripts', function(){
-    wp_enqueue_script( 'wp-input-scanner-script', plugins_url( 'assets/scanner.js', __FILE__ ), [], false, true);
+    wp_enqueue_script( 'input-scanner-script', plugins_url( 'assets/scanner.js', __FILE__ ), [], false, true);
 });
 
 add_action('admin_init', function (){
-    wp_enqueue_style( 'wp-input-scanner-style', plugins_url( 'assets/scanner.css', __FILE__ ));
+    wp_enqueue_style( 'input-scanner-style', plugins_url( 'assets/scanner.css', __FILE__ ));
 });
 
 add_action('wp_enqueue_scripts', function (){
-    wp_enqueue_script( 'wp-input-scanner-script', plugins_url( 'assets/scanner.js', __FILE__ ), [], false, true);
+    wp_enqueue_script( 'input-scanner-script', plugins_url( 'assets/scanner.js', __FILE__ ), [], false, true);
 });
 
 add_action('wp_enqueue_scripts', function (){
-    wp_enqueue_style( 'wp-input-scanner-style', plugins_url( 'assets/scanner.css', __FILE__ ));
+    wp_enqueue_style( 'input-scanner-style', plugins_url( 'assets/scanner.css', __FILE__ ));
 });
 
-function wpis_add_script_footer(){
-    global $wpis_pluginsettings;
-    $settings = $wpis_pluginsettings->getAll('settings', true);
+function is_add_script_footer(){
+    global $is_pluginsettings;
+    $settings = $is_pluginsettings->getAll('settings', true);
     $customTags = json_encode(array_map('trim', explode(',', $settings->customTags)));
     $customInputTags = json_encode(array_map('trim', explode(',', $settings->customInputTags)));
-    $language = json_encode($wpis_pluginsettings->getAll('language', true));
+    $language = json_encode($is_pluginsettings->getAll('language', true));
 
 print <<<HTML
     <script type="text/javascript" >
      document.addEventListener("DOMContentLoaded", function(event) {
-        WPScanner.initInstance($language);
-        WPScanner.addEventListenerByQuerySelector($customTags);
-        WPScanner.addInputLabelByQuerySelector($customInputTags);
+        InputScanner.initInstance($language);
+        InputScanner.addEventListenerByQuerySelector($customTags);
+        InputScanner.addInputLabelByQuerySelector($customInputTags);
       });
     </script>
 HTML;
 }
 
-add_action('wp_footer', 'wpis_add_script_footer');
-add_action('admin_footer', 'wpis_add_script_footer');
+add_action('wp_footer', 'is_add_script_footer');
+add_action('admin_footer', 'is_add_script_footer');

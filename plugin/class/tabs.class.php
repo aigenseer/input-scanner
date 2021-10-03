@@ -3,7 +3,7 @@
  * Coded By : aigenseer
  * Copyright 2019, https://github.com/aigenseer
  */
-class WPIS_Tabs
+class IS_Tabs
 {
 
   private $tabs;

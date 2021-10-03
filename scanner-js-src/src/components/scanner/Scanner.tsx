@@ -2,7 +2,7 @@
  * Coded By : aigenseer
  * Copyright 2019, https://github.com/aigenseer
  */
-import React, { useEffect, useRef, useImperativeHandle }    from 'react';
+import React, { useRef, useImperativeHandle }    from 'react';
 import Quagga from 'quagga';
 import "./Scanner.css";
 import {BrowserQRCodeReader} from '@zxing/browser';
@@ -10,25 +10,39 @@ import FileUtils from "../../lib/FileUtils";
 
 
 interface IScannerProps{
-    deviceId: string;
+    deviceId: string|null;
     onFetchCode(code: string): any;
 }
+
 export type IScannerHandle = {
     close: () => void,
+    start:() => void
 }
-
 
 export class Scanner
 {
     public static readers = ["ean_reader", "upc_reader"]
-    public static isStarted = false;
     public static browserQRCodeReader = new BrowserQRCodeReader();
     public static currentConfig: any = {};
 
+    public static isLive(): boolean
+    {
+        return Quagga.CameraAccess?.getActiveTrack()?.readyState === "live";
+    }
+
+    public static isEnabled(): boolean
+    {
+        return Quagga.hasOwnProperty("enabled") && Quagga.enabled === true;
+    }
+
+    public static setEnabled(status: boolean)
+    {
+        Quagga.enabled = status;
+    }
+
     public static stop()
     {
-        if(Scanner.isStarted){
-            Scanner.isStarted = false;
+        if(Scanner.isLive()){
             Quagga.stop();
         }
     }
@@ -38,8 +52,7 @@ export class Scanner
         if(config !== null){
             Scanner.currentConfig = config;
         }
-        if(!Scanner.isStarted){
-            Scanner.isStarted = true;
+        if(!Scanner.isLive() && Scanner.isEnabled()){
             Quagga.init(Scanner.currentConfig, (err: any) => {
                 if (err) {
                     console.log(err, "error msg");
@@ -56,7 +69,7 @@ export class Scanner
     public static onDetected(callback: Function)
     {
         Quagga.onDetected((result: any) => {
-            if(result !== undefined && Scanner.isStarted){
+            if(result !== undefined && Scanner.isEnabled()){
                 callback(result.codeResult.code)
             }
         });
@@ -86,8 +99,8 @@ export class Scanner
                         resolve(result.codeResult.code);
                     } else {
                         resolve(null);
+                        setTimeout(() => Scanner.start(), 250);
                     }
-                    setTimeout(() => Scanner.start(), 250);
                 });
             }catch (e){
                 console.log(e)
@@ -137,7 +150,11 @@ const JSXScanner: React.ForwardRefRenderFunction<IScannerHandle, IScannerProps> 
 
     useImperativeHandle(forwardedRef, ()=>({
         close() {
+            Scanner.setEnabled(false);
             Scanner.stop();
+        },
+        start(){
+            start();
         }
     }));
 
@@ -146,7 +163,7 @@ const JSXScanner: React.ForwardRefRenderFunction<IScannerHandle, IScannerProps> 
             Array.from(ref.current.getElementsByTagName("video")).forEach(
                 function(element, index, array) {
                     Scanner.browserQRCodeReader.decodeFromVideoElement(element, result => {
-                        if (result !== undefined && Scanner.isStarted) {
+                        if (result !== undefined && Scanner.isEnabled() && Scanner.isLive()) {
                             detected(result.getText());
                         }
                     })
@@ -156,8 +173,54 @@ const JSXScanner: React.ForwardRefRenderFunction<IScannerHandle, IScannerProps> 
     }
 
 
-    useEffect(() => {
-        if(ref.current !== null){
+    function onProcessed(result: any){
+        if(!Scanner.isEnabled() || !Scanner.isLive()){
+            return;
+        }
+        let drawingCtx = Quagga.canvas.ctx.overlay,
+            drawingCanvas = Quagga.canvas.dom.overlay;
+
+        if (result) {
+            if (result.boxes) {
+                drawingCtx.clearRect(
+                    0,
+                    0,
+                    Number(drawingCanvas.getAttribute("width")),
+                    Number(drawingCanvas.getAttribute("height"))
+                );
+                result.boxes
+                    .filter(function(box: any) {
+                        return box !== result.box;
+                    })
+                    .forEach(function(box: any) {
+                        Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, {
+                            color: "green",
+                            lineWidth: 2
+                        });
+                    });
+            }
+
+            if (result.box) {
+                Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, {
+                    color: "#00F",
+                    lineWidth: 2
+                });
+            }
+
+            if (result.codeResult && result.codeResult.code) {
+                Quagga.ImageDebug.drawPath(
+                    result.line,
+                    { x: "x", y: "y" },
+                    drawingCtx,
+                    { color: "red", lineWidth: 3 }
+                );
+            }
+        }
+    }
+
+    function start(){
+        if(ref.current !== null && props.deviceId !== null && !Scanner.isEnabled() && !Scanner.isLive()){
+            Scanner.setEnabled(true);
             Scanner.stop();
             Scanner.start(
                 {
@@ -185,56 +248,14 @@ const JSXScanner: React.ForwardRefRenderFunction<IScannerHandle, IScannerProps> 
             );
 
             //detecting boxes on stream
-            Quagga.onProcessed((result: any) => {
-                if(!Scanner.isStarted){
-                    return;
-                }
-                let drawingCtx = Quagga.canvas.ctx.overlay,
-                    drawingCanvas = Quagga.canvas.dom.overlay;
-
-                if (result) {
-                    if (result.boxes) {
-                        drawingCtx.clearRect(
-                            0,
-                            0,
-                            Number(drawingCanvas.getAttribute("width")),
-                            Number(drawingCanvas.getAttribute("height"))
-                        );
-                        result.boxes
-                            .filter(function(box: any) {
-                                return box !== result.box;
-                            })
-                            .forEach(function(box: any) {
-                                Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, {
-                                    color: "green",
-                                    lineWidth: 2
-                                });
-                            });
-                    }
-
-                    if (result.box) {
-                        Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, {
-                            color: "#00F",
-                            lineWidth: 2
-                        });
-                    }
-
-                    if (result.codeResult && result.codeResult.code) {
-                        Quagga.ImageDebug.drawPath(
-                            result.line,
-                            { x: "x", y: "y" },
-                            drawingCtx,
-                            { color: "red", lineWidth: 3 }
-                        );
-                    }
-                }
-            });
+            Quagga.onProcessed(onProcessed);
 
             Scanner.onDetected((result: any) => {
                 detected(result);
             });
         }
-    });
+
+    }
 
     function detected(code: any){
         Scanner.stop();

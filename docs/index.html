@@ -11,7 +11,7 @@
     />
     <link rel="apple-touch-icon" href="logo192.png" />
     <link rel="manifest" href="manifest.json" />
-    <title>WP </title>
+    <title>Input Scanner</title>
 
     <link href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="scanner.css" rel="stylesheet" >
@@ -34,7 +34,7 @@
       <div class="container-fluid d-flex align-items-center">
         <h1 class="d-flex align-items-center fs-4 text-white mb-0">
           <img src="logo512.png" width="38"  class="me-3" style="background: rgb(255 255 255 / 100%)">
-          WP Input Scanner
+          Input Scanner
         </h1>
         <span class="ms-auto link-light"  >
           <a href="https://github.com/aigenseer/" >
@@ -42,7 +42,7 @@
               <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
             </svg>
           </a>
-          <a href="https://github.com/aigenseer/wp-input-scanner/" class="badge badge-light"  >
+          <a href="https://github.com/aigenseer/input-scanner/" class="badge badge-light"  >
             Repository
           </a>
         </span>
@@ -54,14 +54,14 @@
         <ul class="list-unstyled">
           <li class="my-2">
             <button class="btn d-inline-flex align-items-center collapsed" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#contents-collapse" aria-controls="contents-collapse">
-              WP Input Scanner
+              Input Scanner
             </button>
             <ul class="list-unstyled ps-3 collapse" id="contents-collapse">
               <li>
-                <a class="d-inline-flex align-items-center rounded" href="#wpinputscannerdemo">Demo</a>
+                <a class="d-inline-flex align-items-center rounded" href="#inputscannerdemo">Demo</a>
               </li>
               <li>
-                <a class="d-inline-flex align-items-center rounded" href="#wpinutscanneruseit">Use it</a>
+                <a class="d-inline-flex align-items-center rounded" href="#inutscanneruseit">Use it</a>
               </li>
             </ul>
           </li>
@@ -70,9 +70,9 @@
     </aside>
     <div class="bd-cheatsheet container-fluid bg-body">
       <section id="content">
-        <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">WP Input Scanner</h2>
+        <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Input Scanner</h2>
 
-        <article class="my-3" id="wpinputscannerdemo">
+        <article class="my-3" id="inputscannerdemo">
           <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
             <h3>Demo</h3>
           </div>
@@ -80,28 +80,28 @@
           <div>
 
 
-            <p>Use the class .wp-scanner to use the scanner with a click on the input element.
-              <br><input type="text" id="input" class="wp-scanner" placeholder=".wp-scanner" /></p>
+            <p>Use the class .input-scanner-open to use the scanner with a click on the input element.
+              <br><input type="text" id="input" class="input-scanner-open" placeholder=".input-scanner" /></p>
 
-            <p>Use the class .wp-scanner-open-label to use the scanner-open-label to open the scanner.<br>
-            <input type="text" id="input" class="wp-scanner-open-label" placeholder=".wp-scanner-open-label" /></p>
+            <p>Use the class .input-scanner-open-label to use the scanner-open-label to open the scanner.<br>
+            <input type="text" id="input" class="input-scanner-open-label" placeholder=".input-scanner-open-label" /></p>
 
 
           </div>
 
         </article>
 
-        <article class="my-3" id="wpinutscanneruseit" onclick="">
+        <article class="my-3" id="inutscanneruseit" onclick="">
           <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
             <h3>Use it</h3>
           </div>
 
           <div>
-            <h6>Use the classes <code>.wp-scanner </code> or <code>.wp-scanner-open-label </code></h6>
-            <pre><code>&lt;input type="text" class="qr-scanner-redirect-open" /&gt;</code></pre>
+            <h6>Use the classes <code>.input-scanner-open </code> or <code>.input-scanner-open-label </code></h6>
+            <pre><code>&lt;input type="text" class="input-scanner-open" /&gt;</code></pre>
 
-            <h6>Start with function <code>window.WPScanner.start(elm: HTMLInputElement)</code></h6>
-            <pre><code>&lt;input type="text" onclick="window.WPScanner.start(this)" /&gt;</code></pre>
+            <h6>Start with function <code>window.InputScanner.start(elm: HTMLInputElement)</code></h6>
+            <pre><code>&lt;input type="text" onclick="window.InputScanner.start(this)" /&gt;</code></pre>
 
             <p><b>INFO:</b><br>It is possible to add your own query selectors (IDs, classes) in the WordPress admin interface in order to open the scanner.</p>
 
@@ -120,7 +120,7 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function(event) {
-        WPScanner.initInstance();
+        InputScanner.initInstance();
       });
     </script>
 

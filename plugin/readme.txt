@@ -1,4 +1,4 @@
-=== QR Scanner Redirect ===
+=== Input Scanner ===
 Contributors: aigenseer
 Tags: barcode, camera, qr, scanner, input, browser, wordpress, plugin
 Requires at least: 3.0.1
@@ -14,12 +14,12 @@ This WordPress plugin contains a web barcode and a QR scanner for HTML input ele
 With the user-friendly administrator interface, further settings such as the texts of this plugin can be made.
 
 = Demo & Documentation =
-[Demo](https://aigenseer.github.io/wp-input-scanner/)
+[Demo](https://aigenseer.github.io/input-scanner/)
 
 = Using =
-Add the class .wp-scanner to use the scanner with a click on the input element.
+Add the class .input-scanner-open to use the scanner with a click on the input element.
 or
-add the class .wp-scanner-open-label to use the scanner-open-label to open the scanner.
+add the class .input-scanner-open-label to use the scanner-open-label to open the scanner.
 
 = Supported Platforms =
 * PC: Safari, Opera, Edge, Chrome, Firefox
@@ -28,12 +28,12 @@ add the class .wp-scanner-open-label to use the scanner-open-label to open the s
 = Write Me =
 
 Do you have a problem or a new wishes?
-Write me on [github](https://github.com/aigenseer/wp-input-scanner) or create new topic on wordpress.
+Write me on [github](https://github.com/aigenseer/input-scanner) or create new topic on wordpress.
 
 == Installation ==
 
 = Steps =
-1. Upload the plugin `wp-input-scanner` to the `/wp-content/plugins/` directory
+1. Upload the plugin `input-scanner` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Changelog ==

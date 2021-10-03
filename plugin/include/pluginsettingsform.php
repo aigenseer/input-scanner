@@ -19,7 +19,7 @@ HTML;
 }
 
 
-$wpis_printDescription = 'wpis_printDescription';
+$is_printDescription = 'wpis_printDescription';
 
 
 foreach ($formvalues as $name => $entry){
@@ -38,7 +38,7 @@ HTML;
       print <<<HTML
         <td>
           <div><input type='text' name='$name' value='$value' data-default='$defaultValue' placeholder='$placeholder' /><span class="reset" ><span class="dashicons dashicons-update"></span></span></div>          
-          {$wpis_printDescription($entry)}          
+          {$is_printDescription($entry)}          
         </td>
 HTML;
       break;
@@ -46,7 +46,7 @@ HTML;
         print <<<HTML
           <td>
             <div><textarea name="$name" class="regular-text" placeholder='$placeholder' data-default='$defaultValue' rows="3" style="$style" >$value</textarea><span class="reset" ><span class="dashicons dashicons-update"></span></span></div>    
-            {$wpis_printDescription($entry)}
+            {$is_printDescription($entry)}
           </td>
 HTML;
       break;
@@ -56,7 +56,7 @@ HTML;
         print <<<HTML
           <td>
             <div><input name='$name' type="number" value='$value' data-default='$defaultValue' min='$minvalue' max='$maxvalue' /><span class="reset" ><span class="dashicons dashicons-update"></span></span></div>  
-            {$wpis_printDescription($entry)}
+            {$is_printDescription($entry)}
           </td>
 HTML;
     break;
@@ -71,7 +71,7 @@ HTML;
             <option value="1" {$selectedEnabled} >Enabled</option>
             <option value="0" {$selectedDisabled}>Disabled</option>
           </select><span class="reset" ><span class="dashicons dashicons-update"></span></span></div>  
-          {$wpis_printDescription($entry)}
+          {$is_printDescription($entry)}
         </td>
 HTML;
       //<input name='$name' type="checkbox" value='1' $checked />
@@ -80,7 +80,7 @@ HTML;
 print <<<HTML
         <td>
           <div><input type='color' name='$name' data-default='$defaultValue' value='$value' /><span class="reset" ><span class="dashicons dashicons-update"></span></span></div> 
-          {$wpis_printDescription($entry)}
+          {$is_printDescription($entry)}
         </td>
 HTML;
     break;
@@ -88,7 +88,7 @@ HTML;
 //    print <<<HTML
 //      <td>
 //        <span>$name</span>
-//        {$wpis_printDescription($entry)}
+//        {$is_printDescription($entry)}
 //      </td>
 //HTML;
       break;

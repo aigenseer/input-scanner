@@ -31,7 +31,7 @@ const App: React.ForwardRefRenderFunction<IAppHandle, IAppProps> = (
 ) => {
     const [open, setOpen] = useState<boolean>(false);
     const [devices, setDevices] = useState<IMediaDevices[]>([]);
-    const [deviceId, setDeviceId] = useState<string>("");
+    const [deviceId, setDeviceId] = useState<string|null>(null);
     const [scanFileLoading, setScanFileLoading] = useState<boolean>(false);
     const scannerRef =  useRef<IScannerHandle>(null)
     const toast = useRef<Toast>(null);
@@ -45,6 +45,9 @@ const App: React.ForwardRefRenderFunction<IAppHandle, IAppProps> = (
                         setDeviceId(SettingsStorage.getValueOrDefault("selected-device", devices[0].id));
                         setDevices(devices);
                         setOpen(true);
+                        if(scannerRef.current !== null){
+                            scannerRef.current.start();
+                        }
                     });
                     callback = cb;
                 }else{
@@ -67,9 +70,9 @@ const App: React.ForwardRefRenderFunction<IAppHandle, IAppProps> = (
             toast.current.show({severity:'success', summary: Properties.getMsgSuccessTitle(), detail: Properties.getMsgSuccessBody(), life: 3000});
         }
         if(callback !== null && code.length > 0){
+            onHide();
             callback(code);
             callback = null;
-            onHide();
         }
     }
 
@@ -77,6 +80,7 @@ const App: React.ForwardRefRenderFunction<IAppHandle, IAppProps> = (
         if(scannerRef.current !== null){
             scannerRef.current.close();
         }
+        setDeviceId(null);
         setOpen(false);
     }
 
