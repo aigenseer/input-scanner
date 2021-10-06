@@ -3,7 +3,7 @@
  * Coded By : aigenseer
  * Copyright 2019, https://github.com/aigenseer
  */
-class IS_PluginSettings {
+class InputScanner_PluginSettings {
 
     private $DEFAULT_VALUES;
     private $DEFAULT_GROUP;

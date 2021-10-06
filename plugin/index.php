@@ -13,12 +13,12 @@
  */
 
 
-define('IS_PREFIX', 'inputscanner');
-define('IS_NAME', 'Input-Scanner');
-define('IS_PLUGIN_FILE_URL', dirname( __FILE__ , 1 ));
+define('INPUTSCANNER_PREFIX', 'inputscanner');
+define('INPUTSCANNER_NAME', 'Input-Scanner');
+define('INPUTSCANNER_PLUGIN_FILE_URL', dirname( __FILE__ , 1 ));
 
 include "class/tabs.class.php";
-$is_tabs = new IS_Tabs(IS_PREFIX, IS_NAME, [
+$inputScanner_tabs = new InputScanner_Tabs(INPUTSCANNER_PREFIX, INPUTSCANNER_NAME, [
     'settings' => (object)[
         'title' => 'Settings'
     ],
@@ -26,10 +26,10 @@ $is_tabs = new IS_Tabs(IS_PREFIX, IS_NAME, [
         'title' => 'Language'
     ]
 ]);
-$is_tabs->addScripts();
+$inputScanner_tabs->addScripts();
 
 include "sql/pluginsettings.class.php";
-$is_pluginsettings = new IS_PluginSettings(IS_PREFIX, (object)[
+$inputScanner_pluginSettings = new InputScanner_PluginSettings(INPUTSCANNER_PREFIX, (object)[
     'settings' => (object)[
         'customTags' => (object)[
             'title' => 'Custom HTML queryselectors',
@@ -84,13 +84,13 @@ $is_pluginsettings = new IS_PluginSettings(IS_PREFIX, (object)[
         ]
     ]
 ]);
-$is_pluginsettings->createTable();
+$inputScanner_pluginSettings->createTable();
 
 
 add_action("admin_menu", function(){
-    add_menu_page(IS_NAME, IS_NAME, "manage_options", IS_PREFIX, function(){
-        global $is_tabs;
-        $is_tabs->display(IS_PLUGIN_FILE_URL . "/include/settings.php");
+    add_menu_page(INPUTSCANNER_NAME, INPUTSCANNER_NAME, "manage_options", INPUTSCANNER_PREFIX, function(){
+        global $inputScanner_tabs;
+        $inputScanner_tabs->display(INPUTSCANNER_PLUGIN_FILE_URL . "/include/settings.php");
     });
 });
 
@@ -110,12 +110,12 @@ add_action('wp_enqueue_scripts', function (){
     wp_enqueue_style( 'input-scanner-style', plugins_url( 'assets/scanner.css', __FILE__ ));
 });
 
-function is_add_script_footer(){
-    global $is_pluginsettings;
-    $settings = $is_pluginsettings->getAll('settings', true);
+function inputScanner_add_script_footer(){
+    global $inputScanner_pluginSettings;
+    $settings = $inputScanner_pluginSettings->getAll('settings', true);
     $customTags = json_encode(array_map('trim', explode(',', $settings->customTags)));
     $customInputTags = json_encode(array_map('trim', explode(',', $settings->customInputTags)));
-    $language = json_encode($is_pluginsettings->getAll('language', true));
+    $language = json_encode($inputScanner_pluginSettings->getAll('language', true));
 
 print <<<HTML
     <script type="text/javascript" >
@@ -128,5 +128,5 @@ print <<<HTML
 HTML;
 }
 
-add_action('wp_footer', 'is_add_script_footer');
-add_action('admin_footer', 'is_add_script_footer');
+add_action('wp_footer', 'inputScanner_add_script_footer');
+add_action('admin_footer', 'inputScanner_add_script_footer');

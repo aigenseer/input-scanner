@@ -8,7 +8,7 @@
  * @param  stdobject $entry
  * @return String
  */
-function wpis_printDescription($entry)
+function inputScanner_printDescription($entry)
 {
   $description = property_exists($entry, "description")? esc_html($entry->description): "";
   if(property_exists($entry, 'description')){
@@ -16,15 +16,13 @@ function wpis_printDescription($entry)
     <p class="description">$description</p>
 HTML;
   }
+  return "";
 }
 
-
-$is_printDescription = 'wpis_printDescription';
-
-
-foreach ($formvalues as $name => $entry){
+foreach ($inputScanner_formValues as $name => $entry){
   $defaultValue = esc_html($entry->defaultvalue);
   $title = esc_html($entry->title);
+  $description = inputScanner_printDescription($entry);
   print <<<HTML
     <tr>
       <th scope="row"><label for="name">$title</label></th>
@@ -38,7 +36,7 @@ HTML;
       print <<<HTML
         <td>
           <div><input type='text' name='$name' value='$value' data-default='$defaultValue' placeholder='$placeholder' /><span class="reset" ><span class="dashicons dashicons-update"></span></span></div>          
-          {$is_printDescription($entry)}          
+          {$description}          
         </td>
 HTML;
       break;
@@ -46,7 +44,7 @@ HTML;
         print <<<HTML
           <td>
             <div><textarea name="$name" class="regular-text" placeholder='$placeholder' data-default='$defaultValue' rows="3" style="$style" >$value</textarea><span class="reset" ><span class="dashicons dashicons-update"></span></span></div>    
-            {$is_printDescription($entry)}
+            {$description}
           </td>
 HTML;
       break;
@@ -56,7 +54,7 @@ HTML;
         print <<<HTML
           <td>
             <div><input name='$name' type="number" value='$value' data-default='$defaultValue' min='$minvalue' max='$maxvalue' /><span class="reset" ><span class="dashicons dashicons-update"></span></span></div>  
-            {$is_printDescription($entry)}
+            {$description}
           </td>
 HTML;
     break;
@@ -71,7 +69,7 @@ HTML;
             <option value="1" {$selectedEnabled} >Enabled</option>
             <option value="0" {$selectedDisabled}>Disabled</option>
           </select><span class="reset" ><span class="dashicons dashicons-update"></span></span></div>  
-          {$is_printDescription($entry)}
+          {$description}
         </td>
 HTML;
       //<input name='$name' type="checkbox" value='1' $checked />
@@ -80,7 +78,7 @@ HTML;
 print <<<HTML
         <td>
           <div><input type='color' name='$name' data-default='$defaultValue' value='$value' /><span class="reset" ><span class="dashicons dashicons-update"></span></span></div> 
-          {$is_printDescription($entry)}
+          {$description}
         </td>
 HTML;
     break;
@@ -88,7 +86,7 @@ HTML;
 //    print <<<HTML
 //      <td>
 //        <span>$name</span>
-//        {$is_printDescription($entry)}
+//        {$inputScanner_printDescription($entry)}
 //      </td>
 //HTML;
       break;

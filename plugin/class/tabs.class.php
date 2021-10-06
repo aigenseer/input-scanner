@@ -3,7 +3,7 @@
  * Coded By : aigenseer
  * Copyright 2019, https://github.com/aigenseer
  */
-class IS_Tabs
+class InputScanner_Tabs
 {
 
   private $tabs;
