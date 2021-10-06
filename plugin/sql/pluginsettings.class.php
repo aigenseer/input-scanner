@@ -185,6 +185,7 @@ class IS_PluginSettings {
     {
       $data = [];
       $defaultValues = $this->getDefaultData($group);
+
       foreach ($_POST as $key => $value) {
         if(property_exists($defaultValues, $key)){
           if(property_exists($defaultValues->{$key}, 'validate')){

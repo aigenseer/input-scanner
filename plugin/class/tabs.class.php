@@ -29,7 +29,7 @@ class IS_Tabs
    */
   private function getActiveTab()
   {
-    $active_tab = isset($_GET['tab'])? $_GET[ 'tab' ]: "";
+    $active_tab = isset($_GET['tab'])? sanitize_key($_GET[ 'tab' ]): "";
     $found = '';
     foreach ($this->tabs as $id => $tab) {
       if($active_tab == $id){
