@@ -188,29 +188,24 @@ class InputScanner_PluginSettings {
 
       foreach ($_POST as $key => $value) {
         if(property_exists($defaultValues, $key)){
-          if(property_exists($defaultValues->{$key}, 'validate')){
-            $validate = $defaultValues->{$key}->validate;
-            $data[$key] = $validate($value);
-          }else{
             switch ($defaultValues->{$key}->type) {
-              case 'long-string':
-              case 'color':
-              case 'string':
-                $data[$key] = sanitize_text_field($value);
-                break;
-              case 'number':
-                $data[$key] = intval(sanitize_key($value));
-                break;
-              case 'boolean':
-                $value = intval(sanitize_key($value));
-                if($value == 1 or $value == 0){
-                 $data[$key] = $value;
-                }
-                break;
-              default:
-                break;
+                case 'long-string':
+                case 'color':
+                case 'string':
+                    $data[$key] = sanitize_text_field($value);
+                    break;
+                case 'number':
+                    $data[$key] = intval(sanitize_key($value));
+                    break;
+                case 'boolean':
+                    $value = intval(sanitize_key($value));
+                    if($value == 1 or $value == 0){
+                        $data[$key] = $value;
+                    }
+                    break;
+                default:
+                    break;
             }
-          }// if else
         }//if
       }//foreach
       return $data;
