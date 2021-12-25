@@ -38,5 +38,9 @@ Write me on [github](https://github.com/aigenseer/input-scanner) or create new t
 
 == Changelog ==
 
+
+= 1.0.1 =
+* fix select device dialog
+
 = 1.0.0 =
 * First Version

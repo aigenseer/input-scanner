@@ -3,7 +3,7 @@
  * Plugin Name:       Input Scanner
  * Plugin URI:        https://github.com/aigenseer/input-scanner
  * Description:       Input scanner for QR and barcodes
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Viktor Aigenseer
