@@ -16,7 +16,8 @@ interface IScannerProps{
 
 export type IScannerHandle = {
     close: () => void,
-    start:() => void
+    start:() => void,
+    change:() => void
 }
 
 export class Scanner
@@ -155,6 +156,9 @@ const JSXScanner: React.ForwardRefRenderFunction<IScannerHandle, IScannerProps> 
         },
         start(){
             start();
+        },
+        change(){
+            change();
         }
     }));
 
@@ -218,35 +222,44 @@ const JSXScanner: React.ForwardRefRenderFunction<IScannerHandle, IScannerProps> 
         }
     }
 
+    function change(){
+        if(ref.current !== null && props.deviceId !== null) {
+            initStart();
+        }
+    }
+
+    function initStart(){
+        Scanner.setEnabled(true);
+        Scanner.stop();
+        Scanner.start(
+            {
+                inputStream: {
+                    type: "LiveStream",
+                    target: ref.current,
+                    constraints: {
+                        deviceId: {exact: props.deviceId}
+                    }
+                },
+                locator: {
+                    patchSize: "medium",
+                    halfSample: true
+                },
+                numOfWorkers: 2,
+                frequency: 10,
+                decoder: {
+                    readers: Scanner.readers
+                },
+                locate: true
+            },
+            () => {
+                decodeQRCode();
+            }
+        );
+    }
+
     function start(){
         if(ref.current !== null && props.deviceId !== null && !Scanner.isEnabled() && !Scanner.isLive()){
-            Scanner.setEnabled(true);
-            Scanner.stop();
-            Scanner.start(
-                {
-                    inputStream: {
-                        type: "LiveStream",
-                        target: ref.current,
-                        constraints: {
-                            deviceId: { exact: props.deviceId }
-                        }
-                    },
-                    locator: {
-                        patchSize: "medium",
-                        halfSample: true
-                    },
-                    numOfWorkers: 2,
-                    frequency: 10,
-                    decoder: {
-                        readers: Scanner.readers
-                    },
-                    locate: true
-                },
-                () => {
-                    decodeQRCode();
-                }
-            );
-
+            initStart()
             //detecting boxes on stream
             Quagga.onProcessed(onProcessed);
 

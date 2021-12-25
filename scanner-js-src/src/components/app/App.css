@@ -1,5 +1,6 @@
 .wp-input-scanner-root,
-.p-dialog-mask.p-component-overlay
+.p-dialog-mask.p-component-overlay,
+.p-dropdown-panel
 {
     z-index: 99999 !important;
 }

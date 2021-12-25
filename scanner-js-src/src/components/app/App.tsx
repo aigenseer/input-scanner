@@ -103,6 +103,11 @@ const App: React.ForwardRefRenderFunction<IAppHandle, IAppProps> = (
     function onSelectDevice(e: DropdownChangeParams){
         SettingsStorage.set("selected-device", e.value);
         setDeviceId(e.value);
+        setTimeout(() =>{
+            if(scannerRef.current !== null){
+                scannerRef.current.change();
+            }
+        }, 1000);
     }
 
     function renderFooter(){
